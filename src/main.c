@@ -27,8 +27,8 @@ int	main(void)
 
 	// void	*img;
 
-	int	width = 600;
-	int	height = 600;
+	int	width = WINDOWS_SIZE_X;
+	int	height = WINDOWS_SIZE_X;
 
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, width, height, "Hello world!");

@@ -23,13 +23,6 @@
 # define WINDOWS_SIZE_X 600
 # define WINDOWS_SIZE_Y 600
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
 
 
 typedef struct	s_vars {
@@ -41,15 +34,33 @@ typedef struct	s_vars {
 	double	grid_y_max;
 	double	current_x;
 	double	current_y;
-	
+	void	*img; //things from here
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;	// to here may not be needed. From old struct
+	int		type;
+	int		color;
 }				t_vars;
 
 // main.c
-int		main(void);
+int	main(int argc, char **argv);
 
 //hooks.c
 int	sl_close(int keycode, t_vars *vars);
 int	key_hook(int keycode, t_vars *vars);
 int	mouse_hook(int mousecode, int x, int y, t_vars *vars);
+
+//locate_next.c
+void	locate_next(t_vars *mlx);
+
+//window_setup.c
+int	window_setup(t_vars *mlx);
+
+//mandelbrot.c
+int mandelbrot (double x, double y, t_vars *mlx);
+
+//julica.c
+int julia (double x, double y, t_vars *mlx);
 
 #endif

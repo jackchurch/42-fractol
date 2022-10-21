@@ -7,16 +7,14 @@
 
 int	window_setup(t_vars *mlx)
 {	
-	printf("inside windows setup");
-	const double window_height = WINDOWS_SIZE_Y; //note to self, remove these and use directly to save line numbers even though it kills me
-	const double window_width = WINDOWS_SIZE_X;
+	printf("Inside windows setup\n");
 
 	mlx->mlx = mlx_init();
 
 	if (mlx->type == 1)
-		mlx->win = mlx_new_window(mlx->mlx, window_width, window_height, "Mandelbrot");
+		mlx->win = mlx_new_window(mlx->mlx, WINDOWS_SIZE_X, WINDOWS_SIZE_Y, "Mandelbrot");
 	if (mlx->type == 2)
-		mlx->win = mlx_new_window(mlx->mlx, window_width, window_height, "Julia");
+		mlx->win = mlx_new_window(mlx->mlx, WINDOWS_SIZE_X, WINDOWS_SIZE_Y, "Julia");
 
 	mlx->color = 0;
 

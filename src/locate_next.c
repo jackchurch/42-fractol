@@ -1,23 +1,28 @@
 
 #include "fract_ol.h"
+#include <stdio.h>
 
 //if zooming don't remake the grid, seperate grid setup. 
 void	locate_next(t_vars *mlx) 
 {
+	printf("\nInside locate_next\n");
+
 	double x;
 	double y;
 
 	mlx->current_x = 0;
 	mlx->current_y = 0;
-
+	mlx_clear_window(mlx->mlx, mlx->win);
 	while (mlx->current_y < WINDOWS_SIZE_Y)
 	{
 		while (mlx->current_x < WINDOWS_SIZE_X)
 		{
 			x = mlx->grid_x_min + mlx->current_x * (mlx->grid_y_max - mlx->grid_x_min) / WINDOWS_SIZE_X;
 			y = mlx->grid_y_max - (mlx->grid_y_max - mlx->grid_y_min) * mlx->current_y / WINDOWS_SIZE_Y;
-			if (mlx->type == 1)
+			if (mlx->type == 1){
+				printf("Locatenext: x:\t%f, y:\t%f, mlx\n", x, y);
 				mandelbrot(x, y, mlx);
+			}
 			else
 				julia(x, y, mlx);
 			mlx->current_x++;

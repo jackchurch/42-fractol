@@ -14,14 +14,14 @@
 
 #ifndef FRACT_OL_H
 # define FRACT_OL_H
-# define ITERATION_MAX	50
+# define ITERATION_MAX	5
 // GRID	{-2, 2, -2, 2} //future self, don't do this
 # define GRID_X_MIN -2
 # define GRID_X_MAX 2
 # define GRID_Y_MIN -2
 # define GRID_Y_MAX 2
-# define WINDOWS_SIZE_X 600
-# define WINDOWS_SIZE_Y 600
+# define WINDOWS_SIZE_X 200
+# define WINDOWS_SIZE_Y 200
 
 
 
@@ -58,7 +58,7 @@ void	locate_next(t_vars *mlx);
 int	window_setup(t_vars *mlx);
 
 //mandelbrot.c
-int mandelbrot (double x, double y, t_vars *mlx);
+int mandelbrot (double a, double b, t_vars *mlx);
 
 //julica.c
 int julia (double x, double y, t_vars *mlx);

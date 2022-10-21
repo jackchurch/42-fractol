@@ -34,11 +34,11 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		printf("exiting");
+		printf("\"./fractol m\" or \"./fractol j\"");
 		return (1);
 	}
 	
-	printf("running window_setup");
+	printf("running window_setup\n");
 	window_setup(&mlx);
 
 	return (0);

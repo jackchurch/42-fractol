@@ -14,7 +14,7 @@
 
 #ifndef FRACT_OL_H
 # define FRACT_OL_H
-# define ITERATION_MAX	5
+# define ITERATION_MAX	8
 // GRID	{-2, 2, -2, 2} //future self, don't do this
 # define GRID_X_MIN -2
 # define GRID_X_MAX 2
@@ -41,26 +41,34 @@ typedef struct	s_vars {
 	int		endian;	// to here may not be needed. From old struct
 	int		type;
 	int		color;
-}				t_vars;
+	double	mouse_x;
+	double	mouse_y;
+	double	constant_x;
+	double	constant_y;
+	double	julia_x;
+	double	julia_y;
+	}				t_vars;
+
 
 // main.c
 int	main(int argc, char **argv);
 
 //hooks.c
-int	sl_close(int keycode, t_vars *vars);
-int	key_hook(int keycode, t_vars *vars);
-int	mouse_hook(int mousecode, int x, int y, t_vars *vars);
+int	ft_exit(void);
+void	move(int keycode, t_vars *mlx);
+int	keys(int keycode, t_vars *mlx);
+int	zoom(int keycode, int x, int y, t_vars *mlx);
 
 //locate_next.c
 void	locate_next(t_vars *mlx);
 
 //window_setup.c
-int	window_setup(t_vars *mlx);
+void	window_setup(t_vars *mlx);
 
 //mandelbrot.c
 int mandelbrot (double a, double b, t_vars *mlx);
 
 //julica.c
-int julia (double x, double y, t_vars *mlx);
+int julia (double a, double b, t_vars *mlx);
 
 #endif

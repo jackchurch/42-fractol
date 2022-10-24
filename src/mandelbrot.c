@@ -3,34 +3,28 @@
 #include <math.h>
 #include <stdio.h>
 
-int mandelbrot (double a, double b, t_vars *mlx)
+int mandelbrot(double x, double y, t_vars *mlx)
 {
-	printf("Mandelbrot: a:\t%f, b:\t%f, mlx\n", a, b);
+	// printf("Mandelbrot: a:\t%f, b:\t%f, mlx\n", a, b);
+	int		i;
+	double	xx;
+	double	yy;
+	double	temp;
 
-	int iteration = 0;
-	double ca = a;
-	double cb = b;
-	double  aa;
-	double	bb;
-	double	twoab;
-
-	while (iteration < ITERATION_MAX) //should this move to save computing resources
+	xx = 0;
+	yy = 0;
+	i = 1;
+	while (i < ITERATION_MAX)
 	{
-		printf("\niteration:\t%i\n", iteration);
-		aa = a * a;
-		bb = b * b;
-		twoab = 2 * a * b;
-		a = aa - bb + ca;
-		b = twoab + cb;
-		printf("|aa + bb|:\t%f\n", fabs(a*a + b*b));
-		if (fabs(a*a + b*b) > 16)
+		temp = xx;
+		xx = (pow(xx, 2) - pow(yy, 2)) + x;
+		yy = (2 * temp * yy) + y;
+		if (pow(xx, 2) + pow(yy, 2) > 4)
 		{
-			printf("Make colour: current_x:\t%f, current_y:\t%f\n", mlx->current_x, mlx->current_y);
-			
-			mlx_pixel_put(mlx->mlx, mlx->win, mlx->current_x, mlx->current_y, 0x00E8000F * iteration / ITERATION_MAX);
+			mlx_pixel_put(mlx->mlx, mlx->win, mlx->current_x, mlx->current_y, 0x00E8000F * i / ITERATION_MAX);
 			return (0);
 		}
-		iteration++;
+		i++;
 	}
 	mlx_pixel_put(mlx->mlx, mlx->win, mlx->current_x, mlx->current_y, 0x000000);
 	return (0);

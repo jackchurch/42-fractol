@@ -38,7 +38,7 @@ void	window_setup(t_vars *mlx)
 	if (mlx->type == 2)
 		mlx->win = mlx_new_window(mlx->mlx,
 				WINDOWS_SIZE_X, WINDOWS_SIZE_Y, "Julia");
-	mlx->color = 0;
+	mlx->color = 0x0000FFAB;
 	mlx->grid_x_min = GRID_X_MIN;
 	mlx->grid_x_max = GRID_X_MAX;
 	mlx->grid_y_min = GRID_Y_MIN;
@@ -96,7 +96,7 @@ int	mandelbrot(double a, double b, t_vars *mlx)
 		if (fabs(a * a + b * b) > 4)
 		{
 			mlx_pixel_put(mlx->mlx, mlx->win, mlx->current_x,
-				mlx->current_y, 0x00E8000F * i / ITERATION_MAX);
+				mlx->current_y, mlx->color * i / ITERATION_MAX);
 			return (0);
 		}
 		i++;
@@ -123,7 +123,7 @@ int	julia(double a, double b, t_vars *mlx)
 		if (fabs(a * a + b * b) > 4)
 		{
 			mlx_pixel_put(mlx->mlx, mlx->win, mlx->current_x,
-				mlx->current_y, 0x00E8000F * iteration / ITERATION_MAX);
+				mlx->current_y, mlx->color * iteration / ITERATION_MAX);
 			return (0);
 		}
 		iteration++;

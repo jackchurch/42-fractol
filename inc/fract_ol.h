@@ -13,13 +13,13 @@
 #ifndef FRACT_OL_H
 # include <mlx.h>
 # define FRACT_OL_H
-# define ITERATION_MAX	50
+# define ITERATION_MAX	100
 # define GRID_X_MIN -2
 # define GRID_X_MAX 2
 # define GRID_Y_MIN -2
 # define GRID_Y_MAX 2
-# define WINDOWS_SIZE_X 400
-# define WINDOWS_SIZE_Y 400
+# define WINDOWS_SIZE_X 800
+# define WINDOWS_SIZE_Y 800
 
 typedef struct s_vars {
 	void	*mlx;

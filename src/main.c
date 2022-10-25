@@ -11,78 +11,50 @@
 /* ************************************************************************** */
 
 #include "fract_ol.h"
-#include <stdio.h>
+#include <math.h>
 
 int	main(int argc, char **argv)
 {
 	t_vars	mlx;
 
 	if (argc != 2)
-	{
-		printf("argc not 2");
 		return (1);
-	}
 	if (argv[1][0] == 'm')
-	{
 		mlx.type = 1;
-		printf("mlx.type is %i", mlx.type);
-	}
 	else if (argv[1][0] == 'j')
-	{
-		mlx.constant_x = 0;
-		mlx.constant_y = 0;
-		mlx.mouse_x = 0;
-		mlx.mouse_y = 0;
-		printf("mlx.type is %i", mlx.type);
 		mlx.type = 2;
-	}
 	else
-	{
-		printf("\"./fractol m\" or \"./fractol j\"");
 		return (1);
-	}
-	
 	window_setup(&mlx);
-
 	return (0);
 }
 
-//struct . will modify data
-//sturct -> will dereference
-
 void	window_setup(t_vars *mlx)
 {	
-		printf("running window_setup\n");
-
 	mlx->mlx = mlx_init();
-
 	if (mlx->type == 1)
-		mlx->win = mlx_new_window(mlx->mlx, WINDOWS_SIZE_X, WINDOWS_SIZE_Y, "Mandelbrot");
+		mlx->win = mlx_new_window(mlx->mlx,
+				WINDOWS_SIZE_X, WINDOWS_SIZE_Y, "Mandelbrot");
 	if (mlx->type == 2)
-		mlx->win = mlx_new_window(mlx->mlx, WINDOWS_SIZE_X, WINDOWS_SIZE_Y, "Julia");
-
+		mlx->win = mlx_new_window(mlx->mlx,
+				WINDOWS_SIZE_X, WINDOWS_SIZE_Y, "Julia");
 	mlx->color = 0;
-
 	mlx->grid_x_min = GRID_X_MIN;
 	mlx->grid_x_max = GRID_X_MAX;
 	mlx->grid_y_min = GRID_Y_MIN;
 	mlx->grid_y_max = GRID_Y_MAX;
-
-	locate_next((void *)mlx);
-
-	mlx_key_hook(mlx->win, keys, (void *)mlx);
-	mlx_mouse_hook(mlx->win, zoom, (void *)mlx);
+	if (mlx->type == 1)
+		move(124, mlx);
+	locate_next(mlx);
+	mlx_key_hook(mlx->win, keys, mlx);
+	mlx_mouse_hook(mlx->win, mouse, mlx);
 	mlx_loop(mlx->mlx);
 }
 
-
-//if zooming don't remake the grid
-
-//if zooming don't remake the grid, seperate grid setup. 
-void	locate_next(t_vars *mlx) 
+void	locate_next(t_vars *mlx)
 {
-	double x;
-	double y;
+	double	x;
+	double	y;
 
 	mlx->current_x = 0;
 	mlx->current_y = 0;
@@ -91,8 +63,10 @@ void	locate_next(t_vars *mlx)
 	{
 		while (mlx->current_x < WINDOWS_SIZE_X)
 		{
-			x = mlx->grid_x_min + mlx->current_x * (mlx->grid_x_max - mlx->grid_x_min) / WINDOWS_SIZE_X;
-			y = mlx->grid_y_max - mlx->current_y * (mlx->grid_y_max - mlx->grid_y_min) / WINDOWS_SIZE_Y;
+			x = mlx->grid_x_min + mlx->current_x * (
+					mlx->grid_x_max - mlx->grid_x_min) / WINDOWS_SIZE_X;
+			y = mlx->grid_y_max - mlx->current_y * (
+					mlx->grid_y_max - mlx->grid_y_min) / WINDOWS_SIZE_Y;
 			if (mlx->type == 1)
 				mandelbrot(x, y, mlx);
 			else
@@ -102,13 +76,58 @@ void	locate_next(t_vars *mlx)
 		mlx->current_y++;
 		mlx->current_x = 0;
 	}
+}
 
-	//divide windows into -2 to 2 grid each axis
-	//foreach line - move to own function with the next line
+int	mandelbrot(double a, double b, t_vars *mlx)
+{
+	int		i;
+	double	ca;
+	double	cb;
+	double	twoab;
 
+	ca = a;
+	cb = b;
+	i = 1;
+	while (i < ITERATION_MAX)
+	{
+		twoab = 2 * a * b;
+		a = a * a - b * b + ca;
+		b = twoab + cb;
+		if (fabs(a * a + b * b) > 4)
+		{
+			mlx_pixel_put(mlx->mlx, mlx->win, mlx->current_x,
+				mlx->current_y, 0x00E8000F * i / ITERATION_MAX);
+			return (0);
+		}
+		i++;
+	}
+	mlx_pixel_put(mlx->mlx, mlx->win, mlx->current_x, mlx->current_y, 0x000000);
+	return (0);
+}
 
-			//foreach -2 to 2 point on the line of the grid
-			//perform f(c) = c^2 - c
-			//for number of itterations
+int	julia(double a, double b, t_vars *mlx)
+{
+	int		iteration;
+	double	ca;
+	double	cb;
+	double	twoab;
 
+	iteration = 0;
+	ca = mlx->julia_x;
+	cb = mlx->julia_y;
+	while (iteration < ITERATION_MAX)
+	{
+		twoab = 2 * a * b;
+		a = a * a - b * b + 0 + ca;
+		b = twoab + 0 + cb;
+		if (fabs(a * a + b * b) > 4)
+		{
+			mlx_pixel_put(mlx->mlx, mlx->win, mlx->current_x,
+				mlx->current_y, 0x00E8000F * iteration / ITERATION_MAX);
+			return (0);
+		}
+		iteration++;
+	}
+	mlx_pixel_put(mlx->mlx, mlx->win, mlx->current_x, mlx->current_y, 0x000000);
+	return (0);
 }

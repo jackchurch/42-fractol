@@ -10,12 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
-
 #ifndef FRACT_OL_H
+# include <mlx.h>
 # define FRACT_OL_H
 # define ITERATION_MAX	8
-// GRID	{-2, 2, -2, 2} //future self, don't do this
 # define GRID_X_MIN -2
 # define GRID_X_MAX 2
 # define GRID_Y_MIN -2
@@ -23,9 +21,7 @@
 # define WINDOWS_SIZE_X 200
 # define WINDOWS_SIZE_Y 200
 
-
-
-typedef struct	s_vars {
+typedef struct s_vars {
 	void	*mlx;
 	void	*win;
 	double	grid_x_min;
@@ -34,41 +30,28 @@ typedef struct	s_vars {
 	double	grid_y_max;
 	double	current_x;
 	double	current_y;
-	void	*img; //things from here
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;	// to here may not be needed. From old struct
 	int		type;
 	int		color;
-	double	mouse_x;
-	double	mouse_y;
-	double	constant_x;
-	double	constant_y;
 	double	julia_x;
 	double	julia_y;
-	}				t_vars;
-
+}	t_vars;
 
 // main.c
-int	main(int argc, char **argv);
-
-//hooks.c
-int	ft_exit(void);
-void	move(int keycode, t_vars *mlx);
-int	keys(int keycode, t_vars *mlx);
-int	zoom(int keycode, int x, int y, t_vars *mlx);
-
-//locate_next.c
+int		main(int argc, char **argv);
 void	locate_next(t_vars *mlx);
-
-//window_setup.c
 void	window_setup(t_vars *mlx);
 
+//hooks.c
+int		ft_exit(void);
+void	move(int keycode, t_vars *mlx);
+int		keys(int keycode, t_vars *mlx);
+int		mouse(int keycode, int x, int y, t_vars *mlx);
+void	zoom(int keycode, int x, int y, t_vars *mlx);
+
 //mandelbrot.c
-int mandelbrot (double a, double b, t_vars *mlx);
+int		mandelbrot(double a, double b, t_vars *mlx);
 
 //julica.c
-int julia (double a, double b, t_vars *mlx);
+int		julia(double a, double b, t_vars *mlx);
 
 #endif
